@@ -37,7 +37,7 @@ const posts = [
     id: 3,
     title: 'What is GraphQL?',
     content: 'GraphQL is a query language for APIs',
-    published: true,
+    published: false,
   },
 ]
 
@@ -80,3 +80,6 @@ module.exports = {
   resolvers,
   typeDefs,
 }
+
+
+
