@@ -40,6 +40,7 @@ const resolvers = {
         data: {
           title: args.title,
           content: args.content,
+          published: true
         },
       })
     },
