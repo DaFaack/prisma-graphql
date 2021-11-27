@@ -12,6 +12,16 @@ generator client {
 
 
 
+model Meme {
+  id Int @default(autoincrement()) @id
+  name String
+  button_normal String
+  button_pressed String
+  sound String
+  tab String
+  is_active Boolean @default(true)
+}
+
 
 model Post {
   id        Int     @default(autoincrement()) @id

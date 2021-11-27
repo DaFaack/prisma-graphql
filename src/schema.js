@@ -11,6 +11,15 @@ const typeDefs = gql`
     posts: [Post!]!
   }
 
+  type Meme {
+    id: ID!
+    name: String
+    button_normal: String
+    button_pressed: String
+    sound: String
+    is_active: Boolean
+  }
+
   type Post {
     content: String
     id: ID!
@@ -22,6 +31,7 @@ const typeDefs = gql`
   type Query {
     feed: [Post!]!
     post(id: ID!): Post
+    memes: [Meme!]!
   }
 
   type Mutation {
