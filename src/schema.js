@@ -4,12 +4,6 @@ const { prisma } = require('./db')
  
 
 const typeDefs = gql`
-  type User {
-    email: String!
-    id: ID!
-    name: String
-    posts: [Post!]!
-  }
 
   type Meme {
     id: ID!
