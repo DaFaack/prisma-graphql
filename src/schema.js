@@ -14,11 +14,7 @@ const typeDefs = gql`
   type Meme {
     id: ID!
     name: String
-    button_normal: String
-    button_pressed: String
-    sound: String
-    tab: String
-    is_active: Boolean
+
   }
 
   type Post {
@@ -35,34 +31,15 @@ const typeDefs = gql`
     memes: [Meme!]!
   }
 
-  type Mutation {
-    createUser(data: UserCreateInput!): User!
-    createDraft(authorEmail: String, content: String, title: String!): Post!
-    publish(id: ID!): Post
+  type Mutation { 
+    createDraft(authorEmail: String, content: String, title: String!): Post! 
 
-    createMeme(data: MemeCreateInput!): Meme!
+    createMeme(name: String): Meme!
   }
 
-  input MemeCreateInput {
-    name: String
-    button_normal: String
-    button_pressed: String
-    sound: String
-    tab: String
-    is_active: Boolean
-  }
-
-  input UserCreateInput {
-    email: String!
-    name: String
-    posts: [PostCreateWithoutAuthorInput!]
-  }
-
-  input PostCreateWithoutAuthorInput {
-    content: String
-    published: Boolean
-    title: String!
-  }
+ 
+ 
+ 
 `
 const resolvers = {
   Query: {
@@ -95,34 +72,11 @@ const resolvers = {
         },
       })
     },
-    publish: (parent, args) => {
-      return prisma.post.update({
-        where: { id: Number(args.id) },
-        data: {
-          published: true,
-        },
-      })
-    },
-    createUser: (parent, args) => {
-      return prisma.user.create({
-        data: {
-          email: args.data.email,
-          name: args.data.name,
-          posts: {
-            create: args.data.posts,
-          },
-        },
-      })
-    },
+  
     createMeme: (parent, args) => {
       return prisma.meme.create({
         data: {
-          name: args.data.name,
-          button_normal: args.data.button_normal,
-          button_pressed: args.data.button_pressed,
-          sound: args.data.sound,
-          tab: args.data.tab,
-          published: args.data.published
+          name: args.data.name
         }
       })
     }
