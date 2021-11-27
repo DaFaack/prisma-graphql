@@ -38,6 +38,16 @@ const typeDefs = gql`
     createUser(data: UserCreateInput!): User!
     createDraft(authorEmail: String, content: String, title: String!): Post!
     publish(id: ID!): Post
+
+    createMeme(data: MemeCreateInput!): Meme!
+  }
+
+  input MemeCreateInput {
+    name: String
+    button_normal: String
+    button_pressed: String
+    sound: String
+    is_active: Boolean
   }
 
   input UserCreateInput {
@@ -57,6 +67,11 @@ const resolvers = {
     feed: (parent, args) => {
       return prisma.post.findMany({
         where: { published: true },
+      })
+    },
+    memes: (parten, args) => {
+      return prisma.meme.findMany({
+        where:  { published: true}
       })
     },
     post: (parent, args) => {
@@ -97,6 +112,17 @@ const resolvers = {
         },
       })
     },
+    createMeme: (parent, args) => {
+      return prisma.meme.create({
+        data: {
+          name: args.data.name,
+          button_normal: args.data.button_normal,
+          button_pressed: args.data.button_pressed,
+          sound: args.data.sound,
+          published: args.data.published
+        }
+      })
+    }
   },
   User: {
     posts: (parent, args) => {
