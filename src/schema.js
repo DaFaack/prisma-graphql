@@ -17,6 +17,7 @@ const typeDefs = gql`
     button_normal: String
     button_pressed: String
     sound: String
+    tab: String
     is_active: Boolean
   }
 
@@ -47,6 +48,7 @@ const typeDefs = gql`
     button_normal: String
     button_pressed: String
     sound: String
+    tab: String
     is_active: Boolean
   }
 
