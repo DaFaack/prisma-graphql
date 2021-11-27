@@ -119,6 +119,7 @@ const resolvers = {
           button_normal: args.data.button_normal,
           button_pressed: args.data.button_pressed,
           sound: args.data.sound,
+          tab: args.data.tab,
           published: args.data.published
         }
       })
