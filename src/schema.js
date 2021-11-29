@@ -37,15 +37,8 @@ const typeDefs = gql`
 const resolvers = {
   Query: {
     feed: (parent, args) => {
-      return prisma.post.findMany({
-        where: { published: true },
-      })
-    },
-    memes: (parten, args) => {
-      return prisma.meme.findMany({
-        where:  { published: true}
-      })
-    },
+      return prisma.post.findMany()
+    }, 
     post: (parent, args) => {
       return prisma.post.findOne({
         where: { id: Number(args.id) },
@@ -58,7 +51,6 @@ const resolvers = {
         data: {
           title: args.title,
           content: args.content,
-          published: false,
           author: args.authorEmail && {
             connect: { email: args.authorEmail },
           },
@@ -73,16 +65,7 @@ const resolvers = {
         }
       })
     }
-  },
-  User: {
-    posts: (parent, args) => {
-      return prisma.user
-        .findOne({
-          where: { id: parent.id },
-        })
-        .posts()
-    },
-  },
+  }, 
   Post: {
     author: (parent, args) => {
       return prisma.post
