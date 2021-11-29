@@ -14,6 +14,7 @@ const typeDefs = gql`
   type Post {
     content: String
     id: ID!
+    published: Boolean!
     title: String!
     author: User
   }
@@ -38,10 +39,12 @@ const resolvers = {
   Query: {
     feed: (parent, args) => {
       return prisma.post.findMany({
+        where: { published: true },
       })
     },
     memes: (parten, args) => {
       return prisma.meme.findMany({
+        where:  { published: true}
       })
     },
     post: (parent, args) => {
@@ -55,7 +58,8 @@ const resolvers = {
       return prisma.post.create({
         data: {
           title: args.title,
-          content: args.content, 
+          content: args.content,
+          published: false,
           author: args.authorEmail && {
             connect: { email: args.authorEmail },
           },
