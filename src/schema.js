@@ -14,7 +14,6 @@ const typeDefs = gql`
   type Post {
     content: String
     id: ID!
-    published: Boolean!
     title: String!
     author: User
   }
