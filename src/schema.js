@@ -58,13 +58,7 @@ const resolvers = {
       })
     },
   
-    createMeme: (parent, args) => {
-      return prisma.meme.create({
-        data: {
-          name: args.data.name
-        }
-      })
-    }
+ 
   }, 
   Post: {
     author: (parent, args) => {
