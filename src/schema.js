@@ -58,7 +58,7 @@ const resolvers = {
   },
   Meme: {
     author: (parent, args) => {
-      return prisma.post
+      return prisma.meme
         .findOne({
           where: { id: parent.id },
         })
