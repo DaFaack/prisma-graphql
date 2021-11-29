@@ -1,20 +1,29 @@
-generator client {
-  provider = "prisma-client-js"
-}
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
-model Meme {
-  id   Int    @id @default(autoincrement())
-  name String
+generator client {
+  provider = "prisma-client-js"
 }
 
+
+
+model Meme {
+  id Int @default(autoincrement()) @id
+  name String 
+}
+
+
 model Post {
-  id        Int     @id @default(autoincrement())
+  id        Int     @default(autoincrement()) @id
   title     String
   content   String?
-  authorId  Int? 
+  published Boolean @default(true) 
+  authorId Int?
 }
+
+ 
