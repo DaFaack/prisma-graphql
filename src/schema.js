@@ -4,9 +4,14 @@ const { prisma } = require('./db')
  
 
 const typeDefs = gql`
- 
 
   type Meme {
+    id: ID!
+    name: String
+
+  }
+
+  type Post {
     content: String
     id: ID!
     published: Boolean!
@@ -15,13 +20,15 @@ const typeDefs = gql`
   }
 
   type Query {
-    feed: [Meme!]!
-    meme(id: ID!): Meme 
+    feed: [Post!]!
+    post(id: ID!): Post
+    memes: [Meme!]!
   }
 
   type Mutation { 
-    createDraft(authorEmail: String, content: String, title: String!): Meme! 
- 
+    createDraft(authorEmail: String, content: String, title: String!): Post! 
+
+    createMeme(name: String): Meme!
   }
 
  
@@ -31,7 +38,7 @@ const typeDefs = gql`
 const resolvers = {
   Query: {
     feed: (parent, args) => {
-      return prisma.meme.findMany({
+      return prisma.post.findMany({
         where: { published: true },
       })
     },
@@ -40,10 +47,15 @@ const resolvers = {
         where:  { published: true}
       })
     },
+    post: (parent, args) => {
+      return prisma.post.findOne({
+        where: { id: Number(args.id) },
+      })
+    },
   },
   Mutation: {
     createDraft: (parent, args) => {
-      return prisma.meme.create({
+      return prisma.post.create({
         data: {
           title: args.title,
           content: args.content,
@@ -54,11 +66,27 @@ const resolvers = {
         },
       })
     },
-   
+  
+    createMeme: (parent, args) => {
+      return prisma.meme.create({
+        data: {
+          name: args.data.name
+        }
+      })
+    }
   },
-  Meme: {
+  User: {
+    posts: (parent, args) => {
+      return prisma.user
+        .findOne({
+          where: { id: parent.id },
+        })
+        .posts()
+    },
+  },
+  Post: {
     author: (parent, args) => {
-      return prisma.meme
+      return prisma.post
         .findOne({
           where: { id: parent.id },
         })

@@ -10,10 +10,15 @@ generator client {
   provider = "prisma-client-js"
 }
 
- 
 
 
 model Meme {
+  id Int @default(autoincrement()) @id
+  name String 
+}
+
+
+model Post {
   id        Int     @default(autoincrement()) @id
   title     String
   content   String?
