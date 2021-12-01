@@ -29,19 +29,14 @@ const typeDefs = gql`
     createMeme(name: String): Meme!
   }
 
- 
- 
- 
 `
 const resolvers = {
   Query: {
     feed: (parent, args) => {
-      return prisma.post.findMany({
-      })
+      return prisma.post.findMany()
     },
     memes: (parten, args) => {
-      return prisma.meme.findMany({
-      })
+      return prisma.meme.findMany()
     },
     post: (parent, args) => {
       return prisma.post.findOne({

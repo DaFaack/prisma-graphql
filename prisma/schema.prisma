@@ -15,6 +15,5 @@ model Meme {
 model Post {
   id       Int     @id @default(autoincrement())
   title    String
-  content  String?
-  authorId Int?
+  content  String? 
 }
