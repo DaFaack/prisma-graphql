@@ -60,7 +60,7 @@ const resolvers = {
         data: {
           title: args.title,
           content: args.content,
-          published: false,
+          published: true,
           author: args.authorEmail && {
             connect: { email: args.authorEmail },
           },
