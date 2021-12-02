@@ -2,106 +2,48 @@ const { gql } = require('apollo-server')
 const { prisma } = require('./db')
 
 const typeDefs = gql`
-  type User {
-    email: String!
+  type Meme {
     id: ID!
-    name: String
-    posts: [Post!]!
+    name: String!
+    button_normal: String!
+    button_pressed: String!
   }
-
-  type Post {
-    id: ID!
-    published: Boolean!
-    title: String!
-    author: User
-  }
+ 
 
   type Query {
-    feed: [Post!]!
-    post(id: ID!): Post
+    memes: [Meme!]!
   }
 
   type Mutation {
-    createUser(data: UserCreateInput!): User!
-    createDraft(authorEmail: String, title: String!): Post!
-    publish(id: ID!): Post
+    createMeme(data: MemeCreateInput!): Meme! 
+
   }
 
-  input UserCreateInput {
-    email: String!
-    name: String
-    posts: [PostCreateWithoutAuthorInput!]
-  }
+  input MemeCreateInput {
+    name: String!
+    button_normal: String!
+    button_pressed: String!
+  } 
 
-  input PostCreateWithoutAuthorInput {
-    published: Boolean
-    title: String!
-  }
 `
 
 const resolvers = {
   Query: {
-    feed: (parent, args) => {
-      return prisma.post.findMany({
-        where: { published: true },
-      })
-    },
-    post: (parent, args) => {
-      return prisma.post.findOne({
-        where: { id: Number(args.id) },
-      })
-    },
+    memes: (parent, args) => {
+      return prisma.meme.findMany({})
+    }
   },
   Mutation: {
     createDraft: (parent, args) => {
-      return prisma.post.create({
+      return prisma.meme.create({
         data: {
-          title: args.title,
-          published: false,
-          author: args.authorEmail && {
-            connect: { email: args.authorEmail },
-          },
+          name: args.name,
+          button_normal: args.button_normal,
+          button_pressed: args.button_pressed
         },
       })
     },
-    publish: (parent, args) => {
-      return prisma.post.update({
-        where: { id: Number(args.id) },
-        data: {
-          published: true,
-        },
-      })
-    },
-    createUser: (parent, args) => {
-      return prisma.user.create({
-        data: {
-          email: args.data.email,
-          name: args.data.name,
-          posts: {
-            create: args.data.posts,
-          },
-        },
-      })
-    },
-  },
-  User: {
-    posts: (parent, args) => {
-      return prisma.user
-        .findOne({
-          where: { id: parent.id },
-        })
-        .posts()
-    },
-  },
-  Post: {
-    author: (parent, args) => {
-      return prisma.post
-        .findOne({
-          where: { id: parent.id },
-        })
-        .author()
-    },
-  },
+  }
 }
 
 module.exports = {

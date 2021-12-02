@@ -7,17 +7,11 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Post {
-  id        Int     @id @default(autoincrement())
-  title     String
-  published Boolean @default(false)
-  author    User?   @relation(fields: [authorId], references: [id])
-  authorId  Int?
-}
+ 
 
-model User {
+model Meme {
   id    Int    @id @default(autoincrement())
-  email String @unique
-  name  String
-  posts Post[]
+  name String
+  button_normal  String 
+  button_pressed String
 }
