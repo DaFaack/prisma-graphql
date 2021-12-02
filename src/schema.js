@@ -10,7 +10,6 @@ const typeDefs = gql`
   }
 
   type Post {
-    content: String
     id: ID!
     published: Boolean!
     title: String!
@@ -24,7 +23,7 @@ const typeDefs = gql`
 
   type Mutation {
     createUser(data: UserCreateInput!): User!
-    createDraft(authorEmail: String, content: String, title: String!): Post!
+    createDraft(authorEmail: String, title: String!): Post!
     publish(id: ID!): Post
   }
 
@@ -35,7 +34,6 @@ const typeDefs = gql`
   }
 
   input PostCreateWithoutAuthorInput {
-    content: String
     published: Boolean
     title: String!
   }
@@ -59,7 +57,6 @@ const resolvers = {
       return prisma.post.create({
         data: {
           title: args.title,
-          content: args.content,
           published: false,
           author: args.authorEmail && {
             connect: { email: args.authorEmail },
