@@ -29,12 +29,12 @@ const typeDefs = gql`
 
 const resolvers = {
   Query: {
-    memes: (parent, args) => {
+    memes: (parent, args, ctx, info) => {
       return prisma.meme.findMany()
     }
   },
   Mutation: {
-    createMeme: (parent, args) => {
+    createMeme: (parent, args, ctx, info) => {
       return prisma.meme.create({
         data: {
           name: args.name,
