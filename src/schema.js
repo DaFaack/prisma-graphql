@@ -30,7 +30,7 @@ const typeDefs = gql`
 const resolvers = {
   Query: {
     memes: (parent, args, ctx, info) => {
-      return prisma.meme.findMany
+      return prisma.meme.findMany()
     }
   },
   Mutation: {
