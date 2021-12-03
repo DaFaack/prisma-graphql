@@ -15,8 +15,7 @@ model Post {
   published Boolean @default(false)
   author    User?   @relation(fields: [authorId], references: [id])
   authorId  Int?
-  button_normal String?
-  button_pressed String?
+  test      String?
 }
 
 model User {

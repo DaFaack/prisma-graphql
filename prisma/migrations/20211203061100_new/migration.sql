@@ -5,6 +5,7 @@ CREATE TABLE "Post" (
     "content" TEXT,
     "published" BOOLEAN NOT NULL DEFAULT false,
     "authorId" INTEGER,
+    "test" TEXT,
 
     CONSTRAINT "Post_pkey" PRIMARY KEY ("id")
 );
