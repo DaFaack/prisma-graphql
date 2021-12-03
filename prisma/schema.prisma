@@ -12,6 +12,6 @@ datasource db {
 model Meme {
   id    Int    @id @default(autoincrement())
   name String
-  button_normal  String 
+  button_normal String
   button_pressed String
 }
