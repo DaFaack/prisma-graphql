@@ -15,6 +15,8 @@ const typeDefs = gql`
     published: Boolean!
     title: String!
     author: User
+    button_normal: String
+    button_pressed: String
   }
 
   type Query {
@@ -24,7 +26,7 @@ const typeDefs = gql`
 
   type Mutation {
     createUser(data: UserCreateInput!): User!
-    createMeme(authorEmail: String, content: String, title: String!, published: Boolean): Post!
+    createMeme(authorEmail: String, content: String, title: String!, published: Boolean, button_normal: String, button_pressed: String): Post!
     publish(id: ID!): Post
   }
 
@@ -64,6 +66,8 @@ const resolvers = {
           author: args.authorEmail && {
             connect: { email: args.authorEmail },
           },
+          button_normal: args.button_normal,
+          button_pressed: args.button_pressed
         },
       })
     },
