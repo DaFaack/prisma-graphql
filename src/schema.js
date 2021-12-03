@@ -24,7 +24,7 @@ const typeDefs = gql`
 
   type Mutation {
     createUser(data: UserCreateInput!): User!
-    createDraft(authorEmail: String, content: String, title: String!, published: Boolean): Post!
+    createMeme(authorEmail: String, content: String, title: String!, published: Boolean): Post!
     publish(id: ID!): Post
   }
 
@@ -55,7 +55,7 @@ const resolvers = {
     },
   },
   Mutation: {
-    createDraft: (parent, args) => {
+    createMeme: (parent, args) => {
       return prisma.post.create({
         data: {
           title: args.title,
