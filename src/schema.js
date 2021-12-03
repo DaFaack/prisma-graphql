@@ -24,7 +24,7 @@ const typeDefs = gql`
 
   type Mutation {
     createUser(data: UserCreateInput!): User!
-    createDraft(authorEmail: String, content: String, title: String!): Post!
+    createDraft(authorEmail: String, content: String, title: String!, published: Boolean): Post!
     publish(id: ID!): Post
   }
 
@@ -60,7 +60,7 @@ const resolvers = {
         data: {
           title: args.title,
           content: args.content,
-          published: false,
+          published: args.published,
           author: args.authorEmail && {
             connect: { email: args.authorEmail },
           },
