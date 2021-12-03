@@ -8,10 +8,18 @@ datasource db {
 }
 
  
+model Post {
+  id        Int     @id @default(autoincrement())
+  title     String
+  content   String?
+  published Boolean @default(false)
+  author    User?   @relation(fields: [authorId], references: [id])
+  authorId  Int?
+}
 
-model Meme {
+model User {
   id    Int    @id @default(autoincrement())
-  name String
-  button_normal String
-  button_pressed String
+  email String @unique
+  name  String
+  posts Post[]
 }
